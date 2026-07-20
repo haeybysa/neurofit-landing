@@ -1,0 +1,796 @@
+<!-- index.html — NeuroFit Landing Page -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroFit — AI-тренер, поиск партнёров, бронирование кортов</title>
+    <meta name="description" content="NeuroFit — умный фитнес-помощник с AI-коучем, поиском партнёров для тенниса, падела, гольфа и бронированием спортивных площадок">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #00d4aa;
+            --primary-dark: #00b894;
+            --accent: #7c3aed;
+            --bg-dark: #0f0f1a;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #252542;
+            --text: #e0e0e0;
+            --text-muted: #a0a0b0;
+            --border: #2a2a3e;
+            --gradient: linear-gradient(135deg, #7c3aed, #00d4aa);
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: radial-gradient(ellipse at 50% 0%, #1e1b4b 0%, var(--bg-dark) 70%);
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        
+        .email-form {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 480px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+        
+        .email-form input {
+            flex: 1;
+            padding: 1rem 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--bg-card);
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .email-form input:focus {
+            border-color: var(--primary);
+        }
+        
+        .email-form input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+        
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 4rem;
+            animation: fadeInUp 0.8s ease 0.8s both;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        /* Sections */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-header h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .section-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .feature-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            background: rgba(0, 212, 170, 0.1);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        
+        /* Sports */
+        .sports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+        
+        .sport-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .sport-item:hover {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .sport-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sport-name {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        /* How it works */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin: 0 auto 1rem;
+        }
+        
+        .step h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--primary);
+            position: relative;
+        }
+        
+        .pricing-card.featured::after {
+            content: 'Популярный';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin: 1.5rem 0;
+        }
+        
+        .pricing-features li {
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        /* FAQ */
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .faq-question:hover {
+            color: var(--primary);
+        }
+        
+        .faq-answer {
+            padding: 0 1.25rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 1.25rem 1.25rem;
+            max-height: 200px;
+        }
+        
+        .faq-icon {
+            transition: transform 0.3s;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive */
+        @media (max-width: 640px) {
+            .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+            .email-form { flex-direction: column; }
+            .email-form .btn { width: 100%; }
+            section { padding: 4rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span>🚀</span> Скоро запуск — присоединяйтесь к waitlist
+        </div>
+        <h1>NeuroFit</h1>
+        <p>AI-тренер, который адаптирует тренировки под ваш recovery, находит партнёров для тенниса и падела, и бронирует корт — всё в одном приложении</p>
+        <form class="email-form" onsubmit="handleSubmit(event)">
+            <input type="email" placeholder="Ваш email" required id="emailInput">
+            <button type="submit" class="btn btn-primary">Присоединиться</button>
+        </form>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-number" id="counter1">0</div>
+                <div class="stat-label">В waitlist</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Видов спорта</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">2</div>
+                <div class="stat-label">Страны</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section>
+        <div class="section-header reveal">
+            <h2>Всё, что нужно спортсмену</h2>
+            <p>От персонального AI-коуча до поиска партнёра для игры в теннис в вашем районе</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="feature-icon">🧠</div>
+                <h3>AI-коучинг</h3>
+                <p>Разговорный AI анализирует HRV, сон и нагрузку, адаптирует план и объясняет почему. Поддержка русского и китайского.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">📹</div>
+                <h3>AR-анализ техники</h3>
+                <p>Камера отслеживает 17 точек тела, мгновенно корректирует глубину приседаний и выравнивание позвоночника. Локально — без облака.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🍽️</div>
+                <h3>AI-питание</h3>
+                <p>Фото еды → мгновенный разбор макро. План адаптируется под нагрузку: больше углеводов в день ног, больше белка после тренировки.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🤝</div>
+                <h3>Поиск партнёров</h3>
+                <p>AI подбирает партнёра по уровню игры, стилю и расписанию. Теннис, падел, гольф, настольный теннис — найдите игрока рядом.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🏟️</div>
+                <h3>Бронирование площадок</h3>
+                <p>Карта спортивных объектов с реальным временем занятости. Бронируйте корт, делите оплату, получайте QR-код на вход.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🏆</div>
+                <h3>RPG-геймификация</h3>
+                <p>Классы персонажей, кланы, PvP-челленджи, сезонные рейтинги. Не просто бейджи — полноценная прогрессия.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sports -->
+    <section style="background: rgba(124,58,237,0.03); border-radius: 24px; margin: 0 1rem; max-width: calc(1200px - 2rem);">
+        <div class="section-header reveal">
+            <h2>Поддерживаемые виды спорта</h2>
+            <p>От ракеточных до командных — найдите партнёра или тренера для любой дисциплины</p>
+        </div>
+        <div class="sports-grid reveal">
+            <div class="sport-item"><div class="sport-emoji">🎾</div><div class="sport-name">Теннис</div></div>
+            <div class="sport-item"><div class="sport-emoji">🏓</div><div class="sport-name">Настольный теннис</div></div>
+            <div class="sport-item"><div class="sport-emoji">🥎</div><div class="sport-name">Падел</div></div>
+            <div class="sport-item"><div class="sport-emoji">⛳</div><div class="sport-name">Гольф</div></div>
+            <div class="sport-item"><div class="sport-emoji">🏸</div><div class="sport-name">Бадминтон</div></div>
+            <div class="sport-item"><div class="sport-emoji">🏐</div><div class="sport-name">Волейбол</div></div>
+            <div class="sport-item"><div class="sport-emoji">⚽</div><div class="sport-name">Футбол</div></div>
+            <div class="sport-item"><div class="sport-emoji">🏀</div><div class="sport-name">Баскетбол</div></div>
+            <div class="sport-item"><div class="sport-emoji">🎯</div><div class="sport-name">Дартс / Боулинг</div></div>
+            <div class="sport-item"><div class="sport-emoji">🏹</div><div class="sport-name">Стрельба из лука</div></div>
+            <div class="sport-item"><div class="sport-emoji">🧗</div><div class="sport-name">Скалолазание</div></div>
+            <div class="sport-item"><div class="sport-emoji">🏊</div><div class="sport-name">Плавание</div></div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section>
+        <div class="section-header reveal">
+            <h2>Как это работает</h2>
+            <p>От идеи до игры — 4 простых шага</p>
+        </div>
+        <div class="steps reveal">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Выберите вид спорта</h3>
+                <p>Теннис, падел, гольф, настольный теннис и 20+ других дисциплин</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Укажите параметры</h3>
+                <p>Город, район, уровень, время, цель — тренировка или игра</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>AI подбирает</h3>
+                <p>Корты, тренеры, партнёры — всё сразу с рейтингом совместимости</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Бронируйте и играйте</h3>
+                <p>Оплата, QR-код на вход, чат с партнёром — всё в приложении</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section>
+        <div class="section-header reveal">
+            <h2>Тарифы</h2>
+            <p>Начните бесплатно, масштабируйте по мере роста</p>
+        </div>
+        <div class="pricing-grid reveal">
+            <div class="pricing-card">
+                <h3>Free</h3>
+                <div class="price">$0<span>/мес</span></div>
+                <ul class="pricing-features">
+                    <li>Базовые тренировки</li>
+                    <li>Логирование прогресса</li>
+                    <li>Сообщество</li>
+                    <li>1 бронирование/мес</li>
+                </ul>
+                <button class="btn btn-outline" style="width:100%">Начать</button>
+            </div>
+            <div class="pricing-card featured">
+                <h3>Pro</h3>
+                <div class="price">$9.99<span>/мес</span></div>
+                <ul class="pricing-features">
+                    <li>Всё из Free</li>
+                    <li>AI-коуч без ограничений</li>
+                    <li>AR-анализ техники</li>
+                    <li>AI-питание</li>
+                    <li>Неограниченный поиск партнёров</li>
+                    <li>Бронирование без ограничений</li>
+                </ul>
+                <button class="btn btn-primary" style="width:100%">Выбрать Pro</button>
+            </div>
+            <div class="pricing-card">
+                <h3>Elite</h3>
+                <div class="price">$29.99<span>/мес</span></div>
+                <ul class="pricing-features">
+                    <li>Всё из Pro</li>
+                    <li>Реальный тренер 2x/мес</li>
+                    <li>Приоритетная поддержка</li>
+                    <li>Персональный план питания</li>
+                </ul>
+                <button class="btn btn-outline" style="width:100%">Выбрать Elite</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section>
+        <div class="section-header reveal">
+            <h2>Частые вопросы</h2>
+        </div>
+        <div class="faq-container reveal">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Когда будет запуск приложения?
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">Планируемый запуск — Q1 2027. Присоединитесь к waitlist, чтобы получить ранний доступ и скидку 50% на первый месяц Pro.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    В каких городах будет работать поиск партнёров?
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">На старте — Москва, Санкт-Петербург, Пекин, Шанхай. Далее расширяемся по России, Китаю и глобально.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Нужно ли платить за бронирование кортов отдельно?
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">Нет, бронирование включено в подписку Pro. Вы платите только стоимость аренды корта, которую делите с партнёром через приложение.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Как работает AR-анализ техники?
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">Всё обрабатывается локально на вашем телефоне — видео не уходит в облако. AI отслеживает 17 ключевых точек тела и мгновенно подсказывает, как улучшить технику.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Можно ли использовать без подписки?
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">Да! Free-версия даёт базовые тренировки, логирование и 1 бронирование в месяц. Pro открывает AI-коуча, AR и неограниченный поиск.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="text-align: center;">
+        <div class="reveal">
+            <h2 style="font-size: clamp(1.5rem, 4vw, 2.5rem); margin-bottom: 1rem;">Готовы начать?</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Присоединитесь к <span id="counter2">0</span> человек в waitlist и получите ранний доступ</p>
+            <form class="email-form" style="margin: 0 auto;" onsubmit="handleSubmit(event)">
+                <input type="email" placeholder="Ваш email" required>
+                <button type="submit" class="btn btn-primary">Присоединиться</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>NeuroFit © 2026</p>
+        <p style="margin-top: 0.5rem;">Связаться: <a href="mailto:hello@neurofit.app">hello@neurofit.app</a></p>
+        <p style="margin-top: 1rem; font-size: 0.8rem;">Сделано с ❤️ для спортсменов по всему миру</p>
+    </footer>
+
+    <script>
+        // Counter animation
+        function animateCounter(id, target, duration = 2000) {
+            const el = document.getElementById(id);
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    start = target;
+                    clearInterval(timer);
+                }
+                el.textContent = Math.floor(start).toLocaleString();
+            }, 16);
+        }
+        
+        // Start counters when page loads
+        setTimeout(() => {
+            animateCounter('counter1', 1247);
+            animateCounter('counter2', 1247);
+        }, 1000);
+        
+        // FAQ toggle
+        function toggleFaq(element) {
+            const item = element.parentElement;
+            const wasActive = item.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            
+            // Open clicked if wasn't active
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        }
+        
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        
+        // Form submit
+        function handleSubmit(e) {
+            e.preventDefault();
+            const email = e.target.querySelector('input[type="email"]').value;
+            
+            // Store in localStorage (for demo)
+            const emails = JSON.parse(localStorage.getItem('waitlist') || '[]');
+            emails.push({ email, date: new Date().toISOString() });
+            localStorage.setItem('waitlist', JSON.stringify(emails));
+            
+            alert('Спасибо! Вы добавлены в waitlist. Мы напишем, когда запускаемся 🚀');
+            e.target.reset();
+            
+            // Update counter
+            const current = parseInt(document.getElementById('counter1').textContent.replace(/,/g, ''));
+            animateCounter('counter1', current + 1, 500);
+            animateCounter('counter2', current + 1, 500);
+        }
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
