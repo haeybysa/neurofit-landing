@@ -9,7 +9,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0ea5e9">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="NeuroFit">
+<link rel="apple-touch-icon" href="icons/icon-192x192.png">
 
+<!-- Регистрация сервис-воркера -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js')
+        .then((reg) => console.log('SW registered:', reg.scope))
+        .catch((err) => console.log('SW failed:', err));
+    });
+  }
+</script>
         :root {
             --primary: #00d4aa;
             --primary-dark: #00b894;
@@ -22,7 +39,35 @@
             --border: #1e1e32;
             --gradient: linear-gradient(135deg, #7c3aed, #00d4aa);
         }
+<!-- Кнопка установки PWA -->
+<div id="pwa-install" style="display:none; position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#0ea5e9; color:white; padding:14px 28px; border-radius:12px; box-shadow:0 4px 20px rgba(14,165,233,0.3); font-family:system-ui; font-weight:600; cursor:pointer; z-index:9999; gap:8px; align-items:center;">
+  📲 Установить NeuroFit
+</div>
 
+<script>
+  let deferredPrompt;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('pwa-install').style.display = 'flex';
+  });
+
+  document.getElementById('pwa-install').addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      document.getElementById('pwa-install').style.display = 'none';
+    }
+    deferredPrompt = null;
+  });
+
+  window.addEventListener('appinstalled', () => {
+    document.getElementById('pwa-install').style.display = 'none';
+    deferredPrompt = null;
+  });
+</script>
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background: var(--bg-dark);
