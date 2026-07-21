@@ -3228,7 +3228,7 @@
             showToast('Регистрация ' + roleText + ' прошла успешно! Добро пожаловать!', 'success');
             document.getElementById('registerForm').reset();
             document.getElementById('passwordStrengthBar').className = 'password-strength-bar';
-            document.getElementById('sportTags').innerHTML = '<input type="text" id="sportTagInput" placeholder="Введите и нажмите Enter" onkeydown="handleTagInput(event, 'sportTags', 'sportTagInput')">';
+            document.getElementById('sportTags').innerHTML = '<input type="text" id="sportTagInput" placeholder="Введите и нажмите Enter" onkeydown="handleTagInput(event, \'sportTags\', \'sportTagInput\')">';
             selectRole('seeker');
         }
 
